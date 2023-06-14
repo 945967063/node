@@ -1,4 +1,4 @@
-
+'use strict';
 const { Controller } = require('egg');
 
 class UserService extends Controller {
@@ -9,9 +9,7 @@ class UserService extends Controller {
       // 获取登录时的 username, password
       const { useName, passWord } = ctx.request.body;
       // useName是否存在
-      const sql = `select * from user where useName = '${useName}'`;
-      // 根据用户名，在数据库查找相对应的id操作
-      const userInfo = await app.mysql.query(sql);
+      const userInfo = await ctx.service.login.login(useName);
       console.log(userInfo);
       // 1、没找到说明没有该用户
       if (userInfo.length === 0) {
@@ -47,6 +45,33 @@ class UserService extends Controller {
         status: 500,
         desc: '登录失败',
         data: null,
+      };
+    }
+  }
+
+  // 新增用户
+  async add_user() {
+    const { ctx, app } = this;
+    const { useName, passWord } = ctx.request.body;
+    // useName是否存在
+    const result = await ctx.service.login.login(useName);
+    if (result.length > 0) {
+      ctx.body = {
+        status: 500,
+        desc: '用户名已存在',
+      };
+      return;
+    }
+    try {
+      await app.mysql.insert('user', { useName, passWord });
+      ctx.body = {
+        status: 200,
+        desc: '新增成功',
+      };
+    } catch (error) {
+      ctx.body = {
+        status: 500,
+        desc: '新增失败',
       };
     }
   }
