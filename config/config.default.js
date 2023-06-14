@@ -32,7 +32,7 @@ module.exports = appInfo => {
   config.multipart = {
     mode: 'file',
     fileSize: 1048576000,
-    whitelist: [ '.txt', '.png', '.jpg' ],
+    whitelist: [ '.txt', '.png', '.jpg', '.jpeg', '.gif', '.pdf' ],
   };
   // 文件静态路径
   config.static = {

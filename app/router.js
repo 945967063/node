@@ -10,6 +10,6 @@ module.exports = app => {
   router.get('/', controller.home.index);
   router.post('/api/login', controller.login.login);
   router.post('/api/add_user', controller.login.add_user);
-  router.post('/api/upload/upload', controller.upload.upload); // 修改用户个性签名
+  router.post('/api/upload/upload', _jwt, controller.upload.upload); // 修改用户个性签名
 
 };
