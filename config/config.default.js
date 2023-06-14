@@ -11,7 +11,7 @@ module.exports = appInfo => {
    * @type {Egg.EggAppConfig}
    **/
   const config = exports = {};
-
+  const path = require('path');
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_123';
 
@@ -26,6 +26,27 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+  };
+  // 文件存放路径和文件白名单
+  config.uploadDir = 'app/public/img';
+  config.multipart = {
+    mode: 'file',
+    fileSize: 1048576000,
+    whitelist: [ '.txt', '.png', '.jpg' ],
+  };
+  // 文件静态路径
+  config.static = {
+    prefix: '/app/public', // 访问前缀
+    dir: path.join(appInfo.baseDir, 'app/public'),
+    dynamic: true,
+    preload: false,
+    maxAge: 31536000,
+    buffer: true,
+  };
+  config.cors = {
+    origin: '*', // 允许所有跨域访问
+    credentials: true, // 允许 Cookie 跨域跨域
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
   config.mysql = {
     // 单数据库信息配置

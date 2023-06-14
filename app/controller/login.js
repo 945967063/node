@@ -15,7 +15,7 @@ class UserService extends Controller {
       if (userInfo.length === 0) {
         ctx.body = {
           status: 500,
-          desc: '账号不存在',
+          msg: '账号不存在',
           data: null,
         };
         return;
@@ -24,7 +24,7 @@ class UserService extends Controller {
       if (userInfo[0] && passWord !== userInfo[0].passWord) {
         ctx.body = {
           status: 500,
-          desc: '账号密码错误',
+          msg: '账号密码错误',
           data: null,
         };
         return;
@@ -37,13 +37,13 @@ class UserService extends Controller {
       // 返回 token
       ctx.body = {
         status: 200,
-        desc: '登录成功',
+        msg: '登录成功',
         data: { token },
       };
     } catch (error) {
       ctx.body = {
         status: 500,
-        desc: '登录失败',
+        msg: '登录失败',
         data: null,
       };
     }
@@ -58,7 +58,7 @@ class UserService extends Controller {
     if (result.length > 0) {
       ctx.body = {
         status: 500,
-        desc: '用户名已存在',
+        msg: '用户名已存在',
       };
       return;
     }
@@ -66,12 +66,12 @@ class UserService extends Controller {
       await app.mysql.insert('user', { useName, passWord });
       ctx.body = {
         status: 200,
-        desc: '新增成功',
+        msg: '新增成功',
       };
     } catch (error) {
       ctx.body = {
         status: 500,
-        desc: '新增失败',
+        msg: '新增失败',
       };
     }
   }
