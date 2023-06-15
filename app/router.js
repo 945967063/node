@@ -11,5 +11,6 @@ module.exports = app => {
   router.post('/api/login', controller.login.login);
   router.post('/api/add_user', controller.login.add_user);
   router.post('/api/upload/upload', _jwt, controller.upload.upload); // 修改用户个性签名
+  router.get('/api/login/getCode', controller.login.get_code); // 获取微信code
 
 };

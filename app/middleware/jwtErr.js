@@ -14,7 +14,7 @@ module.exports = secret => {
         // 获取当前时间戳秒
         const now = Math.floor(Date.now() / 1000);
         console.log(now, iat, 'now, iat');
-        if (now - 60 * 60 * 24 > iat) {
+        if (now - 60 * 60 * 24 * 30 > iat) {
           ctx.status = 401;
           ctx.body = {
             msg: 'token已过期，请重新登录',

@@ -3,8 +3,8 @@
 const env = 'development';
 const api =
   env === 'development'
-    ? 'localhost:7001/'
-    : 'http://127.0.0.1:7001/';
+    ? 'http://192.168.40.166:7001/'
+    : 'http://192.168.40.166:7001/';
 // 分页查询
 function responseFormat(status, data) {
   if (status) {

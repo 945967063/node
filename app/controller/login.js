@@ -76,6 +76,13 @@ class UserService extends Controller {
       };
     }
   }
+  // 获取微信code
+  async get_code() {
+    const { ctx } = this;
+    const { code } = ctx.request.query;
+    const result = await ctx.service.wxApi.code2Session(code);
+    ctx.body = result;
+  }
 
 }
 

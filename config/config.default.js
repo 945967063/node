@@ -48,6 +48,10 @@ module.exports = appInfo => {
     credentials: true, // 允许 Cookie 跨域跨域
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
+  config.wxApp = {
+    appid: 'wxdbbb9520b353f48c',
+    secret: '6609a49325715101b022494ca0cf94f5',
+  };
   config.mysql = {
     // 单数据库信息配置
     client: {
@@ -72,7 +76,7 @@ module.exports = appInfo => {
     secret: '123456', // 自定义加密字符串，secret 是在服务端的，不要泄露
     // enable: true, // default is false
     // match: '/jwt', // optional
-    expiresIn: 60 * 60 * 24, // token 过期时间
+    expiresIn: 60 * 60 * 24 * 30, // token 过期时间
 
   };
   return {
