@@ -7,8 +7,25 @@ module.exports = secret => {
     if (token !== 'null' && token) {
       try {
         // eslint-disable-next-line no-unused-vars
-        decode = ctx.app.jwt.verify(token, secret); // 验证token
-        await next();
+        decode = await ctx.app.jwt.verify(token, secret); // 验证token
+        console.log('token 需要校验', decode);
+        // token是否过期
+        const { iat } = decode;
+        // 获取当前时间戳秒
+        const now = Math.floor(Date.now() / 1000);
+        console.log(now, iat, 'now, iat');
+        if (now - 60 * 60 * 24 > iat) {
+          ctx.status = 401;
+          ctx.body = {
+            msg: 'token已过期，请重新登录',
+            success: false,
+            code: 401,
+          };
+          return;
+        }
+        await next()
+
+        ;
       } catch ({ name, message }) {
         if (name === 'JsonWebTokenError') {
           ctx.status = 401;

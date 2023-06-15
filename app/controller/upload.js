@@ -13,8 +13,6 @@ class UploadController extends Controller {
     // 需要前往 config/config.default.js 设置 config.multipart 的 mode 属性为 file
     const file = ctx.request.files[0];
     // 判断只能上传图片
-    console.log(file);
-
 
     // 声明存放资源的路径
     let uploadDir = '';

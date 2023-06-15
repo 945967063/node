@@ -69,11 +69,10 @@ module.exports = appInfo => {
   };
   // jwt 配置
   config.jwt = {
-    secret: 'kaimo313', // 自定义加密字符串，secret 是在服务端的，不要泄露
-    ignore: [ '/api/add_user', '/api/login' ], // 哪些请求不需要认证
+    secret: '123456', // 自定义加密字符串，secret 是在服务端的，不要泄露
     // enable: true, // default is false
     // match: '/jwt', // optional
-    expiresIn: '24h',
+    expiresIn: 60 * 60 * 24, // token 过期时间
 
   };
   return {

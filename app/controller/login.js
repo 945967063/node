@@ -29,11 +29,12 @@ class UserService extends Controller {
         };
         return;
       }
-      const token = app.jwt.sign({
-        id: userInfo[0].id,
-        username: userInfo[0].username,
-        exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60), // token 有效期为 24 小时
+      console.log(ctx.request.body.useName);
+      const token = ctx.app.jwt.sign({
+        useName: ctx.request.body.useName,
+        passWord: ctx.request.body.passWord,
       }, app.config.jwt.secret);
+      console.log(token, 'token');
       // 返回 token
       ctx.body = {
         status: 200,
