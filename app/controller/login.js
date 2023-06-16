@@ -83,6 +83,27 @@ class UserService extends Controller {
     const result = await ctx.service.wxApi.code2Session(code);
     ctx.body = result;
   }
+  /** 根据token更新用户头像 */
+  async update_avatar() {
+    const { ctx, app } = this;
+    const { avatar } = ctx.request.body;
+    const token = ctx.request.header.authorization;
+    const decode = ctx.app.jwt.verify(token, app.config.jwt.secret);
+    const { useName } = decode;
+    try {
+      await app.mysql.update('user', { avatar }, { where: { useName } });
+      ctx.body = {
+        status: 200,
+        msg: '更新成功',
+      };
+    } catch (error) {
+      ctx.body = {
+        status: 500,
+        msg: '更新失败',
+      };
+    }
+  }
+
 
 }
 
