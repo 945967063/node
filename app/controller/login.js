@@ -20,8 +20,9 @@ class UserService extends Controller {
         };
         return;
       }
+      console.log(userInfo, '_____');
       // 2、找到用户，并且判断输入密码与数据库中用户密码
-      if (userInfo[0] && passWord !== userInfo[0].passWord) {
+      if (userInfo[0] && passWord !== userInfo[0].password) {
         ctx.body = {
           status: 500,
           msg: '账号密码错误',
@@ -30,10 +31,13 @@ class UserService extends Controller {
         return;
       }
       console.log(ctx.request.body.useName);
-      const token = ctx.app.jwt.sign({
-        useName: ctx.request.body.useName,
-        passWord: ctx.request.body.passWord,
-      }, app.config.jwt.secret);
+      const token = ctx.app.jwt.sign(
+        {
+          useName: ctx.request.body.useName,
+          passWord: ctx.request.body.passWord,
+        },
+        app.config.jwt.secret
+      );
       console.log(token, 'token');
       // 返回 token
       ctx.body = {
@@ -64,12 +68,18 @@ class UserService extends Controller {
       return;
     }
     try {
-      await app.mysql.insert('user', { useName, passWord });
+      await app.mysql.insert('users', {
+        username: useName,
+        password: passWord,
+        created_at: new Date(),
+        updated_at: new Date(),
+      });
       ctx.body = {
         status: 200,
         msg: '新增成功',
       };
     } catch (error) {
+      console.log(error);
       ctx.body = {
         status: 500,
         msg: '新增失败',
@@ -103,8 +113,6 @@ class UserService extends Controller {
       };
     }
   }
-
-
 }
 
 module.exports = UserService;
